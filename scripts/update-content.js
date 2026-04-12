@@ -14,7 +14,9 @@ async function updateContent() {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const modelName = "gemini-1.5-flash";
+  console.log(`Using model: ${modelName}`);
+  const model = genAI.getGenerativeModel({ model: modelName });
 
   const date = new Date();
   const dateString = date.toLocaleDateString("en-US", {
