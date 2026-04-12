@@ -129,26 +129,33 @@ export default function App() {
           }}
         >
           <div style={{ color: 'var(--accent)', fontWeight: 700, letterSpacing: 3, marginBottom: 20 }}>
-            <DecodeText text="SYSTEM STATUS: ACTIVE" />
+            <DecodeText text="SYSTEM STATUS: ACTIVE | APRIL 12, 2026" />
           </div>
 
           <h1 style={{ fontSize: '4rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.1, letterSpacing: '-0.04em' }}>
-            <DecodeText text="The AI Race Just Got Faster" />
+            <DecodeText text="Mythos Unleashed: AI's Cybersecurity Frontier" />
           </h1>
 
           <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 30, fontWeight: 300 }}>
-            If you blinked, you might have missed it —{' '}
+            Yesterday, April 11, the AI world witnessed a seismic shift —{' '}
             <span style={{ color: '#fff', fontWeight: 500, background: 'linear-gradient(90deg, var(--accent), var(--accent-alt))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              artificial intelligence moved again
+              Anthropic announced Mythos Preview
             </span>{' '}
-            this week, and it moved fast. From new model releases to breakthroughs in reasoning capabilities, the AI landscape continues to reshape itself at a pace that feels almost surreal.
+            under the classified "Project Glasswing." This model has already identified high-severity zero-day vulnerabilities across every major OS, marking a new era where AI is the ultimate offensive and defensive tool in cyberwarfare.
           </p>
 
           <h2 style={{ fontSize: '2rem', margin: '60px 0 25px', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10 }}>
-            <DecodeText text="Neural Reasoning Upgrades" />
+            <DecodeText text="Global Hardware Sovereignty" />
           </h2>
           <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 30, fontWeight: 300 }}>
-            The biggest buzz this week came from advancements in AI reasoning models — systems that don't just answer questions but actually think through problems step by step before responding.
+            In a massive move toward hardware independence, the Japanese government approved ¥631.5 billion in additional subsidies for Rapidus. The goal is clear: domestic 2nm AI chip production by 2027, challenging the long-standing dominance of TSMC and reshaping the global silicon supply chain.
+          </p>
+
+          <h2 style={{ fontSize: '2rem', margin: '60px 0 25px', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10 }}>
+            <DecodeText text="100x Energy Efficiency Breakthrough" />
+          </h2>
+          <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 30, fontWeight: 300 }}>
+            Sustainability met superintelligence yesterday as researchers at Tufts University unveiled a neuro-symbolic system that consumes 100x less energy than traditional neural networks. By blending logic-driven symbolic reasoning with deep learning, they've solved complex tasks that previously required massive compute clusters.
           </p>
 
           <motion.div
@@ -156,10 +163,10 @@ export default function App() {
             style={{ marginTop: 80, padding: 60, background: 'rgba(255, 255, 255, 0.03)', borderRadius: 30, border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'background 0.3s' }}
           >
             <h2 style={{ fontSize: '1.8rem', marginTop: 0 }}>
-              <DecodeText text="Final Computation" />
+              <DecodeText text="The 2026 Trajectory" />
             </h2>
             <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 0 }}>
-              Every week in AI now feels like a quarterly report used to feel — dense with news, hard to fully absorb, and full of implications that take time to unpack. Stay curious, stay critical, and keep learning.
+              As of April 11, 2026, the trajectory is undeniable: AI is moving from cloud-based assistance to autonomous agentic systems and hardware-integrated intelligence. With the UN's new scientific panel now operational, the world is racing to govern what it has built.
             </p>
           </motion.div>
         </motion.article>
