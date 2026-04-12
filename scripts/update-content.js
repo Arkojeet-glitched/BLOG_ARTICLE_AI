@@ -14,8 +14,8 @@ async function updateContent() {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const modelName = "gemini-1.5-flash";
-  console.log(`Version: 1.1 - Using model: ${modelName}`);
+  const modelName = "gemini-1.5-pro";
+  console.log(`Version: 1.2 - Using model: ${modelName}`);
   const model = genAI.getGenerativeModel({ model: modelName });
 
   const date = new Date();
