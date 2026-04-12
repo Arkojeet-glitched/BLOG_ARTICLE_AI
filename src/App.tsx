@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, useScroll, useSpring, useTransform, useMotionValue, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 
 // --- Components ---
 
@@ -19,7 +19,6 @@ const DecodeText = ({ text }: { text: string }) => {
           })
           .join('')
       );
-
       if (iteration >= text.length) clearInterval(interval);
       iteration += 1 / 3;
     }, 30);
@@ -82,37 +81,6 @@ const BackgroundCanvas = () => {
   return <canvas ref={canvasRef} id="bg-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />;
 };
 
-const CustomCursor = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, [mouseX, mouseY]);
-
-  const x = useTransform(mouseX, (v) => v - (isActive ? 20 : 10));
-  const y = useTransform(mouseY, (v) => v - (isActive ? 20 : 10));
-
-  return (
-    <motion.div
-      id="custom-cursor"
-      style={{
-        x,
-        y,
-        width: isActive ? 40 : 20,
-        height: isActive ? 40 : 20,
-        backgroundColor: isActive ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-      }}
-    />
-  );
-};
-
 // --- Main App ---
 
 export default function App() {
@@ -122,8 +90,7 @@ export default function App() {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <BackgroundCanvas />
-      <CustomCursor />
-      
+
       {/* Progress Bar */}
       <motion.div
         style={{
