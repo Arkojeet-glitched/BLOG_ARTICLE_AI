@@ -129,44 +129,74 @@ export default function App() {
           }}
         >
           <div style={{ color: 'var(--accent)', fontWeight: 700, letterSpacing: 3, marginBottom: 20 }}>
-            <DecodeText text="SYSTEM STATUS: ACTIVE | APRIL 12, 2026" />
+            <DecodeText text="INTELLIGENCE REPORT | APRIL 12, 2026" />
           </div>
 
-          <h1 style={{ fontSize: '4rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.1, letterSpacing: '-0.04em' }}>
-            <DecodeText text="Mythos Unleashed: AI's Cybersecurity Frontier" />
+          <h1 style={{ fontSize: '4.5rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.05, letterSpacing: '-0.04em' }}>
+            <DecodeText text="The Vulnpocalypse & The Rise of Embodied Minds" />
           </h1>
 
-          <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 30, fontWeight: 300 }}>
-            Yesterday, April 11, the AI world witnessed a seismic shift —{' '}
+          <p style={{ fontSize: '1.4rem', color: 'var(--text-dim)', marginBottom: 50, fontWeight: 300, lineHeight: 1.6 }}>
+            The events of April 11, 2026, have etched a permanent mark on the history of computation. We have crossed the threshold from probabilistic assistants to{' '}
             <span style={{ color: '#fff', fontWeight: 500, background: 'linear-gradient(90deg, var(--accent), var(--accent-alt))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Anthropic announced Mythos Preview
-            </span>{' '}
-            under the classified "Project Glasswing." This model has already identified high-severity zero-day vulnerabilities across every major OS, marking a new era where AI is the ultimate offensive and defensive tool in cyberwarfare.
+              agentic, embodied, and sovereign intelligence
+            </span>. 
+            From the strategic withholding of "Mythos" to the emergence of neurosymbolic kernels, the race has transformed into a global battle for control, safety, and silicon.
           </p>
 
-          <h2 style={{ fontSize: '2rem', margin: '60px 0 25px', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10 }}>
-            <DecodeText text="Global Hardware Sovereignty" />
-          </h2>
-          <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 30, fontWeight: 300 }}>
-            In a massive move toward hardware independence, the Japanese government approved ¥631.5 billion in additional subsidies for Rapidus. The goal is clear: domestic 2nm AI chip production by 2027, challenging the long-standing dominance of TSMC and reshaping the global silicon supply chain.
-          </p>
+          <section style={{ marginBottom: 80 }}>
+            <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
+              <DecodeText text="01. The Mythos Paradox" />
+            </h2>
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 25 }}>
+              Anthropic’s announcement of **Mythos Preview** yesterday sent shockwaves through the cybersecurity community. Capable of autonomously discovering zero-day vulnerabilities across any modern OS, the model was deemed too dangerous for public access. Instead, Anthropic activated **Project Glasswing**, a defensive-only implementation designed to immunize critical infrastructure before the "Vulnpocalypse" can be exploited by less aligned actors.
+            </p>
+          </section>
 
-          <h2 style={{ fontSize: '2rem', margin: '60px 0 25px', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10 }}>
-            <DecodeText text="100x Energy Efficiency Breakthrough" />
-          </h2>
-          <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 30, fontWeight: 300 }}>
-            Sustainability met superintelligence yesterday as researchers at Tufts University unveiled a neuro-symbolic system that consumes 100x less energy than traditional neural networks. By blending logic-driven symbolic reasoning with deep learning, they've solved complex tasks that previously required massive compute clusters.
-          </p>
+          <section style={{ marginBottom: 80 }}>
+            <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
+              <DecodeText text="02. Embodied Intelligence: GEN-1 & Astra" />
+            </h2>
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 25 }}>
+              The digital-physical barrier collapsed yesterday as **Generalist AI** unveiled **GEN-1**. This foundation model achieved a 99% success rate in unstructured physical tasks—from box folding to precision assembly—without task-specific training. Simultaneously, ByteDance’s **Astra** dual-model architecture redefined indoor autonomous navigation, allowing robots to perceive and interact with complex environments with human-like spatial reasoning.
+            </p>
+          </section>
+
+          <section style={{ marginBottom: 80 }}>
+            <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
+              <DecodeText text="03. The Neurosymbolic Shift" />
+            </h2>
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 25 }}>
+              A major architectural pivot was confirmed yesterday. Analysts have identified a 3,167-line **symbolic pattern-matching kernel** at the heart of the latest Claude Code update. This "Neurosymbolic" approach blends the intuitive power of deep learning with the rigid logic of symbolic AI, virtually eliminating the "probabilistic erraticism" that has plagued LLMs since their inception.
+            </p>
+          </section>
+
+          <section style={{ marginBottom: 80 }}>
+            <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
+              <DecodeText text="04. Geopolitics of Silicon & Data" />
+            </h2>
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              <li style={{ marginBottom: 30, paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
+                <strong style={{ color: '#fff', display: 'block', fontSize: '1.3rem', marginBottom: 10 }}>Hardware Sovereignty:</strong> Japan's $16 billion injection into **Rapidus** marks a desperate bid to decouple from the global silicon monopoly and secure 2nm production by 2027.
+              </li>
+              <li style={{ marginBottom: 30, paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
+                <strong style={{ color: '#fff', display: 'block', fontSize: '1.3rem', marginBottom: 10 }}>Regulatory Fracture:</strong> California’s **Executive Order N-5-26** has set the state on a collision course with federal "minimally burdensome" frameworks, forcing global firms to choose between two vastly different legal realities.
+              </li>
+              <li style={{ paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
+                <strong style={{ color: '#fff', display: 'block', fontSize: '1.3rem', marginBottom: 10 }}>Energy Moratorium:</strong> The **AI Data Center Moratorium Act** proposed yesterday threatens to halt the construction of massive compute hubs, potentially cooling the rapid expansion of US-based training clusters.
+              </li>
+            </ul>
+          </section>
 
           <motion.div
             whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
             style={{ marginTop: 80, padding: 60, background: 'rgba(255, 255, 255, 0.03)', borderRadius: 30, border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'background 0.3s' }}
           >
-            <h2 style={{ fontSize: '1.8rem', marginTop: 0 }}>
-              <DecodeText text="The 2026 Trajectory" />
+            <h2 style={{ fontSize: '2rem', marginTop: 0, color: 'var(--accent)' }}>
+              <DecodeText text="Executive Summary" />
             </h2>
-            <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', marginBottom: 0 }}>
-              As of April 11, 2026, the trajectory is undeniable: AI is moving from cloud-based assistance to autonomous agentic systems and hardware-integrated intelligence. With the UN's new scientific panel now operational, the world is racing to govern what it has built.
+            <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', lineHeight: 1.6, marginBottom: 0 }}>
+              Yesterday was a warning shot. As AI moves into the physical world (embodied) and gains the ability to dismantle its own digital foundations (Mythos), the need for a unified global governance—currently debated at the UN—has never been more critical. We are no longer just building tools; we are architecting the next era of terrestrial intelligence.
             </p>
           </motion.div>
         </motion.article>
