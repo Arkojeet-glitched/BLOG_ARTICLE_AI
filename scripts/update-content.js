@@ -14,8 +14,8 @@ async function updateContent() {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const modelName = "gemini-2.5-flash";
-  console.log(`Version: 1.4 - Using model: ${modelName}`);
+  const modelName = "gemini-3.1-flash-lite";
+  console.log(`Version: 1.5 - Using model: ${modelName}`);
   const model = genAI.getGenerativeModel({ model: modelName });
 
   const date = new Date();
@@ -26,7 +26,7 @@ async function updateContent() {
   }).toUpperCase();
 
   const prompt = `
-    Search for the latest global AI news and developments from the last 24 hours (today is ${dateString}).
+    Perform a DEEP RESEARCH sweep for the latest global AI news, technical breakthroughs, and policy developments from the last 24 hours (today is ${dateString}). You must be exhaustive.
     Create a highly detailed, "character-driven" intelligence briefing in the style of a high-tech, cyberpunk-noir news blog.
     
     The output must be a JSON object with the following structure:
@@ -37,9 +37,8 @@ async function updateContent() {
       "sections": [
         { "id": "01", "heading": "Heading for topic 1", "content": "Detailed summary (4-5 sentences) with a strong 'insider intelligence' persona." },
         { "id": "02", "heading": "Heading for topic 2", "content": "..." },
-        { "id": "03", "heading": "Heading for topic 3", "content": "..." },
-        { "id": "04", "heading": "Heading for topic 4", "content": "..." },
-        { "id": "05", "heading": "Heading for topic 5", "content": "..." }
+        ... provide exactly 10 sections if possible. If 10 distinct events are absolutely not available, provide a MINIMUM of 7 sections. Format id as "01", "02", etc. ...
+        { "id": "10", "heading": "Heading for topic 10", "content": "..." }
       ],
       "conclusion": "A final, ominous or inspiring closing statement."
     }
