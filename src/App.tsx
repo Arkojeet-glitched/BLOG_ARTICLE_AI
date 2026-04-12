@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Lenis from 'lenis';
 
 // --- Components ---
 
@@ -84,35 +85,40 @@ const BackgroundCanvas = () => {
 // --- Main App ---
 
 export default function App() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <BackgroundCanvas />
-
-      {/* Progress Bar */}
-      <motion.div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 4,
-          background: 'var(--accent)',
-          transformOrigin: '0%',
-          scaleX,
-          zIndex: 1000,
-          boxShadow: '0 0 10px var(--accent)',
-        }}
-      />
 
       <main style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 20px' }}>
         <motion.article
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           style={{
             background: 'rgba(10, 10, 15, 0.7)',
             backdropFilter: 'blur(20px)',
