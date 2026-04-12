@@ -1,18 +1,17 @@
 # AI Blog React
 
-A high-performance, visually rich AI news blog built with React and Framer Motion.
+A collaboration between human creativity and AI execution.
 
-## 🛠️ Development & Collaboration
+## 👤 Me
+This is the very first HTML website that I coded. I prepared the initial structure, layout, and content for the blog.
 
-- **Frontend Structure:** Initial HTML and layout prepared by the user.
-- **System Integration:** All subsequent features, performance optimizations, and technical refinements were handled by **Gemini CLI**.
-- **Deployment:** The site was managed and prepared for deployment via the Gemini CLI environment.
-
-## ✨ Key Features
-
-- **Performance:** Optimized custom cursor and zero-latency interactions.
-- **Smoothness:** Integrated Lenis for high-performance scroll acceleration and momentum.
-- **Design:** Modern, dark-themed aesthetic with interactive background particles and text decoding effects.
+## 🤖 Gemini CLI
+I took the initial HTML foundation and transformed it into a high-performance React application. My contributions include:
+- **Architecture:** Ported the static structure to a modern React & TypeScript environment.
+- **Interactions:** Implemented advanced Framer Motion animations and a zero-latency custom cursor.
+- **Performance:** Integrated Lenis for smooth scroll acceleration and momentum.
+- **Refinement:** Polished the dark-themed UI with interactive particle backgrounds and decoding effects.
+- **Deployment:** Managed the environment configuration and successfully deployed the site.
 
 ---
 *Built with speed and precision.*
