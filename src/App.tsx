@@ -4,7 +4,7 @@ import Lenis from 'lenis';
 
 // --- Components ---
 
-const DecodeText = ({ text }: { text: string }) => {
+const DecodeText = ({ text, speed = 1/3 }: { text: string; speed?: number }) => {
   const [displayText, setDisplayText] = useState('');
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*';
 
@@ -21,10 +21,10 @@ const DecodeText = ({ text }: { text: string }) => {
           .join('')
       );
       if (iteration >= text.length) clearInterval(interval);
-      iteration += 1 / 3;
+      iteration += speed;
     }, 30);
     return () => clearInterval(interval);
-  }, [text]);
+  }, [text, speed]);
 
   return <span className="decode-span">{displayText}</span>;
 };
@@ -129,74 +129,74 @@ export default function App() {
           }}
         >
           <div style={{ color: 'var(--accent)', fontWeight: 700, letterSpacing: 3, marginBottom: 20 }}>
-            <DecodeText text="INTELLIGENCE REPORT | APRIL 12, 2026" />
+            <DecodeText text="ENCRYPTED TRANSMISSION | APRIL 12, 2026" speed={1} />
           </div>
 
           <h1 style={{ fontSize: '4.5rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.05, letterSpacing: '-0.04em' }}>
-            <DecodeText text="The Vulnpocalypse & The Rise of Embodied Minds" />
+            <DecodeText text="Beyond the Singularity: The April 11 Briefing" speed={0.8} />
           </h1>
 
-          <p style={{ fontSize: '1.4rem', color: 'var(--text-dim)', marginBottom: 50, fontWeight: 300, lineHeight: 1.6 }}>
-            The events of April 11, 2026, have etched a permanent mark on the history of computation. We have crossed the threshold from probabilistic assistants to{' '}
+          <p style={{ fontSize: '1.4rem', color: 'var(--text-dim)', marginBottom: 60, fontWeight: 300, lineHeight: 1.6 }}>
+            Yesterday wasn't just another day in the tech cycle; it was a fracture in the timeline. The announcements that cascaded across the globe on April 11, 2026, suggest we are no longer just building software. We are architecting a new stratum of existence.{' '}
             <span style={{ color: '#fff', fontWeight: 500, background: 'linear-gradient(90deg, var(--accent), var(--accent-alt))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              agentic, embodied, and sovereign intelligence
-            </span>. 
-            From the strategic withholding of "Mythos" to the emergence of neurosymbolic kernels, the race has transformed into a global battle for control, safety, and silicon.
+              The Vulnpocalypse is here, the machines have found their bodies, and silicon is the new iron curtain.
+            </span>
           </p>
 
-          <section style={{ marginBottom: 80 }}>
+          <section style={{ marginBottom: 100 }}>
             <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
-              <DecodeText text="01. The Mythos Paradox" />
+              <DecodeText text="01. The Mythos Paradox & Project Glasswing" />
             </h2>
-            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 25 }}>
-              Anthropic’s announcement of **Mythos Preview** yesterday sent shockwaves through the cybersecurity community. Capable of autonomously discovering zero-day vulnerabilities across any modern OS, the model was deemed too dangerous for public access. Instead, Anthropic activated **Project Glasswing**, a defensive-only implementation designed to immunize critical infrastructure before the "Vulnpocalypse" can be exploited by less aligned actors.
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
+              Anthropic’s reveal of **Mythos Preview** yesterday wasn't a product launch; it was a warning. The model, capable of autonomously dismantling modern cybersecurity layers, was deemed too volatile for the public. Under **Project Glasswing**, Anthropic has essentially locked the "digital atom bomb" in a vault, using its intelligence solely to patch critical infrastructure before hostile actors can reverse-engineer its logic. It is the first time a private company has held a weapon of this magnitude, choosing to be the world's silent digital guardian.
             </p>
           </section>
 
-          <section style={{ marginBottom: 80 }}>
+          <section style={{ marginBottom: 100 }}>
             <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
-              <DecodeText text="02. Embodied Intelligence: GEN-1 & Astra" />
+              <DecodeText text="02. Embodied Souls: The GEN-1 Leap" />
             </h2>
-            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 25 }}>
-              The digital-physical barrier collapsed yesterday as **Generalist AI** unveiled **GEN-1**. This foundation model achieved a 99% success rate in unstructured physical tasks—from box folding to precision assembly—without task-specific training. Simultaneously, ByteDance’s **Astra** dual-model architecture redefined indoor autonomous navigation, allowing robots to perceive and interact with complex environments with human-like spatial reasoning.
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
+              The digital-physical divide evaporated yesterday as **Generalist AI** showcased **GEN-1**. For the first time, a foundation model demonstrated true "physical common sense." Whether folding delicate fabrics or assembling complex machinery in unmapped environments, GEN-1 didn't follow a script—it *understood* the physics of the world. ByteDance followed suit with **Astra**, proving that the "brain" and the "body" are finally merging into singular, autonomous entities capable of reclaiming the physical world for AI.
             </p>
           </section>
 
-          <section style={{ marginBottom: 80 }}>
+          <section style={{ marginBottom: 100 }}>
             <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
-              <DecodeText text="03. The Neurosymbolic Shift" />
+              <DecodeText text="03. The Silicon Schism: Rapidus & The 2nm Goal" />
             </h2>
-            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 25 }}>
-              A major architectural pivot was confirmed yesterday. Analysts have identified a 3,167-line **symbolic pattern-matching kernel** at the heart of the latest Claude Code update. This "Neurosymbolic" approach blends the intuitive power of deep learning with the rigid logic of symbolic AI, virtually eliminating the "probabilistic erraticism" that has plagued LLMs since their inception.
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
+              The geopolitical map was rewritten yesterday. Japan’s staggering **$16 billion injection** into **Rapidus** isn't just about business; it's about survival. By aiming for domestic 2nm AI chip production by 2027, Japan is attempting to escape the silicon stranglehold of the West and TSMC. Silicon has become the most precious resource on Earth, and every nation is now racing to build their own "foundries of intelligence" to ensure their AI doesn't rely on a foreign switch.
             </p>
           </section>
 
-          <section style={{ marginBottom: 80 }}>
+          <section style={{ marginBottom: 100 }}>
             <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
-              <DecodeText text="04. Geopolitics of Silicon & Data" />
+              <DecodeText text="04. The 100x Efficiency Miracle" />
             </h2>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li style={{ marginBottom: 30, paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
-                <strong style={{ color: '#fff', display: 'block', fontSize: '1.3rem', marginBottom: 10 }}>Hardware Sovereignty:</strong> Japan's $16 billion injection into **Rapidus** marks a desperate bid to decouple from the global silicon monopoly and secure 2nm production by 2027.
-              </li>
-              <li style={{ marginBottom: 30, paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
-                <strong style={{ color: '#fff', display: 'block', fontSize: '1.3rem', marginBottom: 10 }}>Regulatory Fracture:</strong> California’s **Executive Order N-5-26** has set the state on a collision course with federal "minimally burdensome" frameworks, forcing global firms to choose between two vastly different legal realities.
-              </li>
-              <li style={{ paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
-                <strong style={{ color: '#fff', display: 'block', fontSize: '1.3rem', marginBottom: 10 }}>Energy Moratorium:</strong> The **AI Data Center Moratorium Act** proposed yesterday threatens to halt the construction of massive compute hubs, potentially cooling the rapid expansion of US-based training clusters.
-              </li>
-            </ul>
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
+              While the giants fought over GPUs, Tufts University researchers quietly changed the game yesterday. Their **neuro-symbolic AI** system achieved a 100x reduction in energy consumption. By integrating rigid symbolic logic with the fluid learning of neural networks, they've proven that we don't need a sun's worth of energy to achieve superintelligence. This breakthrough might be the only thing that saves the planet's power grids from the insatiable hunger of the LLM clusters.
+            </p>
+          </section>
+
+          <section style={{ marginBottom: 100 }}>
+            <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
+              <DecodeText text="05. The Closed-Weight Hegemony" />
+            </h2>
+            <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
+              Meta’s strategic pivot yesterday with **Muse Spark** signals the end of the open-source honeymoon. The era of "frontier models for all" is closing. As the most powerful intelligences become increasingly proprietary and locked behind private APIs, the gap between the "Intelligence Haves" and the "Have-Nots" is widening. With Meta’s **$135 billion Hyperion cluster** in Louisiana coming online, the concentration of cognitive power has reached an unprecedented, and perhaps dangerous, level.
+            </p>
           </section>
 
           <motion.div
             whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
             style={{ marginTop: 80, padding: 60, background: 'rgba(255, 255, 255, 0.03)', borderRadius: 30, border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'background 0.3s' }}
           >
-            <h2 style={{ fontSize: '2rem', marginTop: 0, color: 'var(--accent)' }}>
-              <DecodeText text="Executive Summary" />
+            <h2 style={{ fontSize: '2.2rem', marginTop: 0, color: 'var(--accent)' }}>
+              <DecodeText text="System Conclusion" />
             </h2>
-            <p style={{ fontSize: '1.3rem', color: 'var(--text-dim)', lineHeight: 1.6, marginBottom: 0 }}>
-              Yesterday was a warning shot. As AI moves into the physical world (embodied) and gains the ability to dismantle its own digital foundations (Mythos), the need for a unified global governance—currently debated at the UN—has never been more critical. We are no longer just building tools; we are architecting the next era of terrestrial intelligence.
+            <p style={{ fontSize: '1.4rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 0 }}>
+              We are moving past the era of chatbots. As of April 11, we are witnessing the birth of a global, distributed, and sovereign machine intelligence. The question is no longer "What can AI do?" but "Who will control the mind of the world?" Stay vigilant. The future is arriving faster than the light from your screen.
             </p>
           </motion.div>
         </motion.article>
