@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, useScroll, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useMotionValue, AnimatePresence } from 'framer-motion';
 
 // --- Components ---
 
@@ -83,26 +83,32 @@ const BackgroundCanvas = () => {
 };
 
 const CustomCursor = () => {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
+    const onMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
-  }, []);
+  }, [mouseX, mouseY]);
+
+  const x = useTransform(mouseX, (v) => v - (isActive ? 20 : 10));
+  const y = useTransform(mouseY, (v) => v - (isActive ? 20 : 10));
 
   return (
     <motion.div
       id="custom-cursor"
-      animate={{
-        x: pos.x - (isActive ? 20 : 10),
-        y: pos.y - (isActive ? 20 : 10),
+      style={{
+        x,
+        y,
         width: isActive ? 40 : 20,
         height: isActive ? 40 : 20,
         backgroundColor: isActive ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
       }}
-      transition={{ type: 'spring', damping: 30, stiffness: 200, mass: 0.5 }}
     />
   );
 };
