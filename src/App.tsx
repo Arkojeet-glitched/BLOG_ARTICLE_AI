@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Lenis from 'lenis';
+import { Moon, Sun } from 'lucide-react';
 import contentData from './data/content.json';
 
 // --- Components ---
@@ -56,8 +57,12 @@ const BackgroundCanvas = () => {
     };
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(2, 2, 4, 0.1)';
+      const isLight = document.documentElement.classList.contains('light');
+      
+      // Dynamic background based on theme
+      ctx.fillStyle = isLight ? 'rgba(245, 247, 250, 0.2)' : 'rgba(2, 2, 4, 0.1)';
       ctx.fillRect(0, 0, width, height);
+      
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -66,7 +71,7 @@ const BackgroundCanvas = () => {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        ctx.fillStyle = 'rgba(0, 242, 255, 0.2)';
+        ctx.fillStyle = isLight ? 'rgba(0, 85, 255, 0.2)' : 'rgba(0, 242, 255, 0.2)';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
@@ -83,9 +88,63 @@ const BackgroundCanvas = () => {
   return <canvas ref={canvasRef} id="bg-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />;
 };
 
+const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: () => void }) => {
+  return (
+    <button
+      onClick={toggleTheme}
+      style={{
+        position: 'fixed',
+        top: 20,
+        right: 20,
+        zIndex: 1000,
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '50%',
+        width: 48,
+        height: 48,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        color: 'var(--text)',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 4px 12px var(--shadow-color)'
+      }}
+      aria-label="Toggle theme"
+    >
+      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+    </button>
+  );
+};
+
 // --- Main App ---
 
 export default function App() {
+  const [isDark, setIsDark] = useState(true);
+
+  // Initialize theme
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        setIsDark(saved === 'dark');
+      } else {
+        setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+      }
+    }
+  }, []);
+
+  // Update theme classes
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
+
   useEffect(() => {
     const lenis = new Lenis({
       lerp: 0.08,
@@ -110,9 +169,12 @@ export default function App() {
     };
   }, []);
 
+  const toggleTheme = () => setIsDark(!isDark);
+
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <BackgroundCanvas />
+      <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
 
       <main style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 20px' }}>
         <motion.article
@@ -121,19 +183,19 @@ export default function App() {
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            background: 'rgba(10, 10, 15, 0.7)',
+            background: 'var(--bg-card)',
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
+            border: '1px solid var(--border-color)',
             borderRadius: 40,
             padding: '100px',
-            boxShadow: '0 50px 100px rgba(0,0,0,0.5)',
+            boxShadow: '0 50px 100px var(--shadow-color)',
           }}
         >
           <div style={{ color: 'var(--accent)', fontWeight: 700, letterSpacing: 3, marginBottom: 20 }}>
             <DecodeText text={`ENCRYPTED TRANSMISSION | ${contentData.date}`} speed={1} />
           </div>
 
-          <h1 style={{ fontSize: '4.5rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.05, letterSpacing: '-0.04em' }}>
+          <h1 style={{ fontSize: '4.5rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.05, letterSpacing: '-0.04em', color: 'var(--text-heading)' }}>
             <DecodeText text={contentData.title} speed={0.8} />
           </h1>
 
@@ -143,7 +205,7 @@ export default function App() {
 
           {contentData.sections.map((section) => (
             <section key={section.id} style={{ marginBottom: 100 }}>
-              <h2 style={{ fontSize: '2.2rem', color: '#fff', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
+              <h2 style={{ fontSize: '2.2rem', color: 'var(--text-heading)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
                 <DecodeText text={`${section.id}. ${section.heading}`} />
               </h2>
               <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
@@ -153,8 +215,8 @@ export default function App() {
           ))}
 
           <motion.div
-            whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
-            style={{ marginTop: 80, padding: 60, background: 'rgba(255, 255, 255, 0.03)', borderRadius: 30, border: '1px solid rgba(255, 255, 255, 0.1)', transition: 'background 0.3s' }}
+            whileHover={{ backgroundColor: 'var(--bg-card-hover)' }}
+            style={{ marginTop: 80, padding: 60, background: 'var(--bg-card-inner)', borderRadius: 30, border: '1px solid var(--border-color-strong)', transition: 'background 0.3s' }}
           >
             <h2 style={{ fontSize: '2.2rem', marginTop: 0, color: 'var(--accent)' }}>
               <DecodeText text="System Conclusion" />

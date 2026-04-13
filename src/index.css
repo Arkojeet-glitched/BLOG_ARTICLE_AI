@@ -1,9 +1,31 @@
 :root {
   --bg: #030305;
+  --bg-card: rgba(10, 10, 15, 0.7);
+  --bg-card-hover: rgba(255, 255, 255, 0.05);
+  --bg-card-inner: rgba(255, 255, 255, 0.03);
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-color-strong: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.5);
   --accent: #00f2ff;
   --accent-alt: #7000ff;
   --text: #ffffff;
+  --text-heading: #ffffff;
   --text-dim: rgba(255, 255, 255, 0.6);
+}
+
+html.light {
+  --bg: #f5f7fa;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(0, 0, 0, 0.05);
+  --bg-card-inner: rgba(0, 0, 0, 0.03);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-color-strong: rgba(0, 0, 0, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --accent: #0055ff;
+  --accent-alt: #5500ff;
+  --text: #111111;
+  --text-heading: #000000;
+  --text-dim: rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -17,6 +39,7 @@ body {
   color: var(--text);
   font-family: 'Inter', -apple-system, sans-serif;
   overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 html.lenis, html.lenis body {
