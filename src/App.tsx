@@ -229,8 +229,8 @@ export default function App() {
         toggleScroll={toggleScroll} 
       />
 
-      {/* top min 80px ensures fixed controls (top:20 + h:48 = 68px) never overlap card */}
-      <main style={{ maxWidth: 800, margin: '0 auto', padding: 'clamp(80px, 10vw, 100px) clamp(12px, 4vw, 20px)' }}>
+      {/* CSS class handles responsive max-width at each breakpoint */}
+      <main className="content-main">
         <motion.article
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -241,12 +241,11 @@ export default function App() {
             backdropFilter: 'blur(20px)',
             border: '1px solid var(--border-color)',
             borderRadius: 'clamp(20px, 5vw, 40px)',
-            padding: 'clamp(30px, 8vw, 60px) clamp(20px, 6vw, 80px)',
+            padding: 'clamp(30px, 6vw, 60px) clamp(20px, 4vw, 60px)',
             boxShadow: '0 clamp(20px, 5vw, 50px) clamp(40px, 10vw, 100px) var(--shadow-color)',
           }}
         >
           <div style={{ color: 'var(--accent)', fontWeight: 700, letterSpacing: 'clamp(1px, 0.5vw, 3px)', marginBottom: 'clamp(10px, 3vw, 20px)', fontSize: 'clamp(0.8rem, 2vw, 1rem)' }}>
-            {/* Speed dramatically increased for faster load */}
             <DecodeText text={`ENCRYPTED TRANSMISSION | ${contentData.date}`} speed={3} />
           </div>
 
@@ -254,28 +253,30 @@ export default function App() {
             <DecodeText text={contentData.title} speed={3} />
           </h1>
 
-          <p style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', color: 'var(--text-dim)', marginBottom: 'clamp(30px, 8vw, 60px)', fontWeight: 300, lineHeight: 1.6 }}>
+          <p className="intro-text" style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', color: 'var(--text-dim)', marginBottom: 'clamp(30px, 8vw, 60px)', fontWeight: 300, lineHeight: 1.6 }}>
             {contentData.intro}
           </p>
 
-          {contentData.sections.map((section) => (
-            <section key={section.id} style={{ marginBottom: 'clamp(50px, 10vw, 100px)' }}>
-              <a
-                href={section.sourceUrl || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="section-link"
-              >
-                <h2 style={{ fontSize: 'clamp(1.3rem, 3.5vw, 2.2rem)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 'clamp(5px, 1.5vw, 10px)', marginBottom: 'clamp(15px, 4vw, 30px)' }}>
-                  {/* High speed for section headers to eliminate eye-sore */}
-                  <DecodeText text={`${section.id}. ${section.heading}`} speed={2} />
-                </h2>
-              </a>
-              <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 'clamp(15px, 4vw, 25px)' }}>
-                {section.content}
-              </p>
-            </section>
-          ))}
+          {/* sections-grid: 1-col on mobile/tablet, 2-col on ≥1100px */}
+          <div className="sections-grid">
+            {contentData.sections.map((section) => (
+              <section key={section.id}>
+                <a
+                  href={section.sourceUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="section-link"
+                >
+                  <h2 style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.9rem)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 'clamp(5px, 1.5vw, 10px)', marginBottom: 'clamp(15px, 3vw, 24px)' }}>
+                    <DecodeText text={`${section.id}. ${section.heading}`} speed={2} />
+                  </h2>
+                </a>
+                <p style={{ fontSize: 'clamp(1rem, 1.8vw, 1.15rem)', color: 'var(--text-dim)', lineHeight: 1.8 }}>
+                  {section.content}
+                </p>
+              </section>
+            ))}
+          </div>
 
           <motion.div
             whileHover={{ backgroundColor: 'var(--bg-card-hover)' }}
