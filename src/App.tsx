@@ -43,11 +43,12 @@ const BackgroundCanvas = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
     let particles: any[] = [];
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
     const init = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-      particles = Array.from({ length: 80 }).map(() => ({
+      particles = Array.from({ length: isMobile ? 35 : 80 }).map(() => ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.5,
@@ -145,7 +146,9 @@ const Controls = ({
 
 export default function App() {
   const [isDark, setIsDark] = useState(true);
-  const [isSmoothScroll, setIsSmoothScroll] = useState(true);
+  // Default smooth scroll off on touch devices — native touch scroll is already smooth
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+  const [isSmoothScroll, setIsSmoothScroll] = useState(!isTouchDevice);
 
   // Initialize theme and settings
   useEffect(() => {
@@ -160,6 +163,9 @@ export default function App() {
       const savedScroll = localStorage.getItem('smoothScroll');
       if (savedScroll !== null) {
         setIsSmoothScroll(savedScroll === 'true');
+      } else if (window.matchMedia('(pointer: coarse)').matches) {
+        // No saved preference — default off for touch/mobile
+        setIsSmoothScroll(false);
       }
     }
   }, []);
@@ -223,8 +229,8 @@ export default function App() {
         toggleScroll={toggleScroll} 
       />
 
-      {/* Reduced max-width from 1100 to 800 for optimal reading comfort */}
-      <main style={{ maxWidth: 800, margin: '0 auto', padding: 'clamp(40px, 10vw, 100px) clamp(10px, 4vw, 20px)' }}>
+      {/* top min 80px ensures fixed controls (top:20 + h:48 = 68px) never overlap card */}
+      <main style={{ maxWidth: 800, margin: '0 auto', padding: 'clamp(80px, 10vw, 100px) clamp(12px, 4vw, 20px)' }}>
         <motion.article
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -244,7 +250,7 @@ export default function App() {
             <DecodeText text={`ENCRYPTED TRANSMISSION | ${contentData.date}`} speed={3} />
           </div>
 
-          <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: 800, marginBottom: 'clamp(20px, 5vw, 40px)', lineHeight: 1.1, letterSpacing: '-0.04em', color: 'var(--text-heading)' }}>
+          <h1 style={{ fontSize: 'clamp(1.75rem, 6vw, 4rem)', fontWeight: 800, marginBottom: 'clamp(20px, 5vw, 40px)', lineHeight: 1.15, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
             <DecodeText text={contentData.title} speed={3} />
           </h1>
 
@@ -254,13 +260,13 @@ export default function App() {
 
           {contentData.sections.map((section) => (
             <section key={section.id} style={{ marginBottom: 'clamp(50px, 10vw, 100px)' }}>
-              <a 
-                href={section.sourceUrl || '#'} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                style={{ textDecoration: 'none' }}
+              <a
+                href={section.sourceUrl || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="section-link"
               >
-                <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', color: 'var(--text-heading)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 'clamp(5px, 1.5vw, 10px)', marginBottom: 'clamp(15px, 4vw, 30px)', transition: 'color 0.3s ease' }} onMouseOver={(e) => (e.currentTarget.style.color = 'var(--accent)')} onMouseOut={(e) => (e.currentTarget.style.color = 'var(--text-heading)')}>
+                <h2 style={{ fontSize: 'clamp(1.3rem, 3.5vw, 2.2rem)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 'clamp(5px, 1.5vw, 10px)', marginBottom: 'clamp(15px, 4vw, 30px)' }}>
                   {/* High speed for section headers to eliminate eye-sore */}
                   <DecodeText text={`${section.id}. ${section.heading}`} speed={2} />
                 </h2>
