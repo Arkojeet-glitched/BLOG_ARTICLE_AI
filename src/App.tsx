@@ -59,11 +59,8 @@ const BackgroundCanvas = () => {
 
     const animate = () => {
       const isLight = document.documentElement.classList.contains('light');
-      
-      // Dynamic background based on theme
-      ctx.fillStyle = isLight ? 'rgba(245, 247, 250, 0.2)' : 'rgba(2, 2, 4, 0.1)';
-      ctx.fillRect(0, 0, width, height);
-      
+
+      // Update positions (shared)
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -71,12 +68,49 @@ const BackgroundCanvas = () => {
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
-
-        ctx.fillStyle = isLight ? 'rgba(0, 85, 255, 0.2)' : 'rgba(0, 242, 255, 0.2)';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
       });
+
+      if (isLight) {
+        // Canvas is transparent — CSS gradient background shows through
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw constellation lines between nearby particles
+        ctx.lineWidth = 0.8;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+              const alpha = (1 - dist / 160) * 0.18;
+              ctx.strokeStyle = `rgba(60, 90, 210, ${alpha})`;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw particle nodes
+        particles.forEach((p) => {
+          ctx.fillStyle = 'rgba(70, 100, 220, 0.3)';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, Math.max(p.size, 1.2), 0, Math.PI * 2);
+          ctx.fill();
+        });
+      } else {
+        // Dark mode: trail fill + cyan dots (unchanged)
+        ctx.fillStyle = 'rgba(2, 2, 4, 0.1)';
+        ctx.fillRect(0, 0, width, height);
+        particles.forEach((p) => {
+          ctx.fillStyle = 'rgba(0, 242, 255, 0.2)';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
       requestAnimationFrame(animate);
     };
 

@@ -20,18 +20,24 @@ html {
 }
 
 html.light {
-  --bg: #f5f7fa;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-hover: rgba(0, 0, 0, 0.05);
-  --bg-card-inner: rgba(0, 0, 0, 0.03);
-  --border-color: rgba(0, 0, 0, 0.1);
-  --border-color-strong: rgba(0, 0, 0, 0.15);
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --accent: #0055ff;
-  --accent-alt: #5500ff;
-  --text: #111111;
-  --text-heading: #000000;
-  --text-dim: rgba(0, 0, 0, 0.75);
+  --bg: #edf1ff;
+  --bg-card: rgba(255, 255, 255, 0.82);
+  --bg-card-hover: rgba(0, 0, 0, 0.04);
+  --bg-card-inner: rgba(80, 100, 220, 0.04);
+  --border-color: rgba(80, 100, 220, 0.12);
+  --border-color-strong: rgba(80, 100, 220, 0.2);
+  --shadow-color: rgba(60, 80, 180, 0.12);
+  --accent: #2244dd;
+  --accent-alt: #6622cc;
+  --text: #111122;
+  --text-heading: #0a0a1a;
+  --text-dim: rgba(10, 10, 40, 0.72);
+}
+
+/* Gradient background for light mode — canvas is transparent so this shows through */
+html.light body {
+  background: linear-gradient(135deg, #f8f9ff 0%, #eaefff 50%, #f0eaff 100%);
+  background-attachment: fixed;
 }
 
 * {
