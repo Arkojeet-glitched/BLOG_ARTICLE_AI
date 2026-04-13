@@ -6,6 +6,11 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONTENT_PATH = path.join(__dirname, "../src/data/content.json");
 
+const MODELS_TO_TRY = [
+  "gemini-3.1-flash",
+  "gemini-2.5-flash"
+];
+
 async function updateContent() {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -14,9 +19,6 @@ async function updateContent() {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const modelName = "gemini-3.1-flash-lite";
-  console.log(`Version: 1.5 - Using model: ${modelName}`);
-  const model = genAI.getGenerativeModel({ model: modelName });
 
   const date = new Date();
   const dateString = date.toLocaleDateString("en-US", {
@@ -25,8 +27,9 @@ async function updateContent() {
     year: "numeric",
   }).toUpperCase();
 
+  // Removed "DEEP RESEARCH sweep" instruction to ensure compatibility with standard free tier APIs
   const prompt = `
-    Perform a DEEP RESEARCH sweep for the latest global AI news, technical breakthroughs, and policy developments from the last 24 hours (today is ${dateString}). You must be exhaustive.
+    Search for the latest global AI news, technical breakthroughs, and policy developments from the last 24 hours (today is ${dateString}). You must be exhaustive.
     Create a highly detailed, "character-driven" intelligence briefing in the style of a high-tech, cyberpunk-noir news blog.
     
     The output must be a JSON object with the following structure:
@@ -50,19 +53,32 @@ async function updateContent() {
     - DO NOT include any markdown formatting in the JSON string itself. Just the raw JSON object.
   `;
 
-  try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    let text = response.text();
-    
-    // Clean up response if it contains markdown code blocks
-    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-    
-    const content = JSON.parse(text);
-    await fs.writeFile(CONTENT_PATH, JSON.stringify(content, null, 2));
-    console.log("Content successfully updated for", dateString);
-  } catch (error) {
-    console.error("Failed to update content:", error);
+  let success = false;
+
+  for (const modelName of MODELS_TO_TRY) {
+    console.log(`Version: 1.6 - Attempting to use model: ${modelName}`);
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      let text = response.text();
+      
+      // Clean up response if it contains markdown code blocks
+      text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+      
+      const content = JSON.parse(text);
+      await fs.writeFile(CONTENT_PATH, JSON.stringify(content, null, 2));
+      console.log(`Content successfully updated for ${dateString} using ${modelName}`);
+      success = true;
+      break; // Exit the loop if successful
+    } catch (error) {
+      console.error(`Failed with model ${modelName}:`, error.message);
+      // Continue to the next model in the loop
+    }
+  }
+
+  if (!success) {
+    console.error("All models failed to generate content.");
     process.exit(1);
   }
 }
