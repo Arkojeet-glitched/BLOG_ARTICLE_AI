@@ -1,22 +1,23 @@
-# Autonomous AI Intelligence Briefing
+# Autonomous AI News Blog
 
-A dynamic, self-updating news platform born from a collaboration between human creativity and AI execution.
+A news site that updates itself every day. I built the first version, then used AI to make it way better.
 
-## 🌟 Introduction
+## Introduction
 
-This platform is a high-performance, cyberpunk-themed news blog that serves daily intelligence reports on global Artificial Intelligence developments.
+This is a cyberpunk-styled blog that posts daily AI news. I wanted it to feel like an "intelligence briefing" kind of thing.
 
-**What it does:** Every day at midnight (UTC), the site autonomously researches the latest AI news, generates a curated 10-point intelligence briefing, updates its own codebase, redeploys to Vercel, and emails the site owner a summary of the update.
+The cool part is I don't have to do anything after setup. Every night at midnight, the site automatically finds the latest AI news, writes a 10-point summary, updates itself, and redeploys. It also emails me when it's done.
 
-**How it functions:** The site operates on a fully automated CI/CD pipeline using GitHub Actions. A custom Node.js script leverages the Google Gemini API to conduct deep research and format the news into structured JSON. The React frontend then dynamically renders this JSON, ensuring the content is always fresh without any manual intervention.
+It uses GitHub Actions to run everything on a schedule. A Node.js script calls the Gemini API to do the research and format the news into JSON. The React frontend just reads that JSON and displays it.
 
 ---
 
-## 👤 Human Contribution
+## My Contribution
 
-This project began as the very first HTML website ever coded by the owner. The initial structure, static layout, and core conceptual content were manually prepared, serving as the foundational blueprint for the digital aesthetics of the blog.
+This actually started as the very first HTML site I ever made. I wrote the layout by hand, set up the basic structure, and figured out what I wanted it to look like. That was the starting point for everything else.
 
-## 🤖 Gemini CLI Contributions
+## Gemini CLI Contributions
+*This section was written by Gemini CLI*
 
 The Gemini CLI took the initial HTML foundation and engineered it into a fully autonomous, production-ready React application. Key implementations include:
 
@@ -28,19 +29,16 @@ The Gemini CLI took the initial HTML foundation and engineered it into a fully a
 
 ---
 
-## ⚙️ Core API Integrations
+## How the Automation Works
 
-The autonomy of this platform relies on two major API integrations executing within a GitHub Actions workflow:
+Two APIs do the heavy lifting inside the GitHub Actions workflow:
 
-### 1. Google Gemini API (`@google/generative-ai`)
-- **Use Case:** Autonomous Content Generation.
-- **Implementation:** A script (`scripts/update-content.js`) is triggered daily. It connects to the Gemini API (using a secure fallback loop between `gemini-3.1-flash` and `gemini-2.5-flash`) and uses a specialized prompt to research the last 24 hours of global AI news. 
-- **Output:** The API returns a highly formatted JSON object containing punchy, character-driven summaries and verified source URLs, which is then written directly into the `src/data/content.json` file.
+### 1. Google Gemini API
+Used for generating the daily news content. A script called `scripts/update-content.js` runs every day, calls the Gemini API, and asks it to research the last 24 hours of AI news. It tries `gemini-3.1-flash` first and falls back to `gemini-2.5-flash` if needed. The result is a JSON file with summaries and source links that gets written straight into `src/data/content.json`.
 
-### 2. SendGrid Email API (`@sendgrid/mail`)
-- **Use Case:** System Notifications.
-- **Implementation:** Immediately after the Gemini API successfully updates the content and GitHub Actions commits the new data, a secondary script (`scripts/send-notification.js`) is triggered.
-- **Output:** It parses the newly generated JSON file and dispatches a stylized HTML email to the repository owner, notifying them that the "Intelligence Report" has been successfully updated and deployed.
+### 2. SendGrid Email API
+Once the content is updated and committed, a second script (`scripts/send-notification.js`) sends me an HTML email letting me know the update went through. Nothing fancy, just so I know it worked.
 
 ---
-*Built with speed, precision, and complete autonomy.*
+
+*This whole thing started as a basic HTML page. Pretty happy with where it ended up.*
