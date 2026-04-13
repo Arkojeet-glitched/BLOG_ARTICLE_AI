@@ -254,10 +254,17 @@ export default function App() {
 
           {contentData.sections.map((section) => (
             <section key={section.id} style={{ marginBottom: 100 }}>
-              <h2 style={{ fontSize: '2.2rem', color: 'var(--text-heading)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
-                {/* High speed for section headers to eliminate eye-sore */}
-                <DecodeText text={`${section.id}. ${section.heading}`} speed={2} />
-              </h2>
+              <a 
+                href={section.sourceUrl || '#'} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style={{ textDecoration: 'none' }}
+              >
+                <h2 style={{ fontSize: '2.2rem', color: 'var(--text-heading)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30, transition: 'color 0.3s ease' }} onMouseOver={(e) => (e.currentTarget.style.color = 'var(--accent)')} onMouseOut={(e) => (e.currentTarget.style.color = 'var(--text-heading)')}>
+                  {/* High speed for section headers to eliminate eye-sore */}
+                  <DecodeText text={`${section.id}. ${section.heading}`} speed={2} />
+                </h2>
+              </a>
               <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
                 {section.content}
               </p>
