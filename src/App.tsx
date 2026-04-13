@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Lenis from 'lenis';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, MousePointer2 } from 'lucide-react';
 import contentData from './data/content.json';
 
 // --- Components ---
 
-const DecodeText = ({ text, speed = 1/3 }: { text: string; speed?: number }) => {
+const DecodeText = ({ text, speed = 1 }: { text: string; speed?: number }) => {
   const [displayText, setDisplayText] = useState('');
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*';
 
@@ -24,7 +24,7 @@ const DecodeText = ({ text, speed = 1/3 }: { text: string; speed?: number }) => 
       );
       if (iteration >= text.length) clearInterval(interval);
       iteration += speed;
-    }, 30);
+    }, 20); // Faster refresh rate
     return () => clearInterval(interval);
   }, [text, speed]);
 
@@ -88,32 +88,56 @@ const BackgroundCanvas = () => {
   return <canvas ref={canvasRef} id="bg-canvas" style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />;
 };
 
-const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: () => void }) => {
+const Controls = ({ 
+  isDark, toggleTheme, isSmoothScroll, toggleScroll 
+}: { 
+  isDark: boolean; toggleTheme: () => void; isSmoothScroll: boolean; toggleScroll: () => void; 
+}) => {
   return (
-    <button
-      onClick={toggleTheme}
-      style={{
-        position: 'fixed',
-        top: 20,
-        right: 20,
-        zIndex: 1000,
-        background: 'var(--bg-card)',
-        border: '1px solid var(--border-color)',
-        borderRadius: '50%',
-        width: 48,
-        height: 48,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        color: 'var(--text)',
-        transition: 'all 0.3s ease',
-        boxShadow: '0 4px 12px var(--shadow-color)'
-      }}
-      aria-label="Toggle theme"
-    >
-      {isDark ? <Sun size={20} /> : <Moon size={20} />}
-    </button>
+    <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 1000, display: 'flex', gap: '10px' }}>
+      <button
+        onClick={toggleScroll}
+        style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '50%',
+          width: 48,
+          height: 48,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          color: 'var(--text)',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 12px var(--shadow-color)',
+          opacity: isSmoothScroll ? 1 : 0.6,
+        }}
+        title={isSmoothScroll ? "Disable Smooth Scroll" : "Enable Smooth Scroll"}
+      >
+        <MousePointer2 size={20} />
+      </button>
+
+      <button
+        onClick={toggleTheme}
+        style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '50%',
+          width: 48,
+          height: 48,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          color: 'var(--text)',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 12px var(--shadow-color)'
+        }}
+        title="Toggle theme"
+      >
+        {isDark ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
+    </div>
   );
 };
 
@@ -121,15 +145,21 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: ()
 
 export default function App() {
   const [isDark, setIsDark] = useState(true);
+  const [isSmoothScroll, setIsSmoothScroll] = useState(true);
 
-  // Initialize theme
+  // Initialize theme and settings
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        setIsDark(saved === 'dark');
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setIsDark(savedTheme === 'dark');
       } else {
         setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+      }
+
+      const savedScroll = localStorage.getItem('smoothScroll');
+      if (savedScroll !== null) {
+        setIsSmoothScroll(savedScroll === 'true');
       }
     }
   }, []);
@@ -145,7 +175,13 @@ export default function App() {
     }
   }, [isDark]);
 
+  // Update Lenis instance
   useEffect(() => {
+    if (!isSmoothScroll) {
+      document.documentElement.classList.remove('lenis', 'lenis-smooth');
+      return;
+    }
+
     const lenis = new Lenis({
       lerp: 0.08,
       orientation: 'vertical',
@@ -167,16 +203,28 @@ export default function App() {
     return () => {
       lenis.destroy();
     };
-  }, []);
+  }, [isSmoothScroll]);
 
   const toggleTheme = () => setIsDark(!isDark);
+  
+  const toggleScroll = () => {
+    const newVal = !isSmoothScroll;
+    setIsSmoothScroll(newVal);
+    localStorage.setItem('smoothScroll', newVal.toString());
+  };
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <BackgroundCanvas />
-      <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+      <Controls 
+        isDark={isDark} 
+        toggleTheme={toggleTheme} 
+        isSmoothScroll={isSmoothScroll} 
+        toggleScroll={toggleScroll} 
+      />
 
-      <main style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 20px' }}>
+      {/* Reduced max-width from 1100 to 800 for optimal reading comfort */}
+      <main style={{ maxWidth: 800, margin: '0 auto', padding: '100px 20px' }}>
         <motion.article
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -187,16 +235,17 @@ export default function App() {
             backdropFilter: 'blur(20px)',
             border: '1px solid var(--border-color)',
             borderRadius: 40,
-            padding: '100px',
+            padding: '60px 80px',
             boxShadow: '0 50px 100px var(--shadow-color)',
           }}
         >
           <div style={{ color: 'var(--accent)', fontWeight: 700, letterSpacing: 3, marginBottom: 20 }}>
-            <DecodeText text={`ENCRYPTED TRANSMISSION | ${contentData.date}`} speed={1} />
+            {/* Speed dramatically increased for faster load */}
+            <DecodeText text={`ENCRYPTED TRANSMISSION | ${contentData.date}`} speed={3} />
           </div>
 
-          <h1 style={{ fontSize: '4.5rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.05, letterSpacing: '-0.04em', color: 'var(--text-heading)' }}>
-            <DecodeText text={contentData.title} speed={0.8} />
+          <h1 style={{ fontSize: '4rem', fontWeight: 800, marginBottom: 40, lineHeight: 1.1, letterSpacing: '-0.04em', color: 'var(--text-heading)' }}>
+            <DecodeText text={contentData.title} speed={3} />
           </h1>
 
           <p style={{ fontSize: '1.4rem', color: 'var(--text-dim)', marginBottom: 60, fontWeight: 300, lineHeight: 1.6 }}>
@@ -206,7 +255,8 @@ export default function App() {
           {contentData.sections.map((section) => (
             <section key={section.id} style={{ marginBottom: 100 }}>
               <h2 style={{ fontSize: '2.2rem', color: 'var(--text-heading)', borderBottom: '2px solid var(--accent)', display: 'inline-block', paddingBottom: 10, marginBottom: 30 }}>
-                <DecodeText text={`${section.id}. ${section.heading}`} />
+                {/* High speed for section headers to eliminate eye-sore */}
+                <DecodeText text={`${section.id}. ${section.heading}`} speed={2} />
               </h2>
               <p style={{ fontSize: '1.25rem', color: 'var(--text-dim)', lineHeight: 1.8, marginBottom: 25 }}>
                 {section.content}
@@ -219,7 +269,7 @@ export default function App() {
             style={{ marginTop: 80, padding: 60, background: 'var(--bg-card-inner)', borderRadius: 30, border: '1px solid var(--border-color-strong)', transition: 'background 0.3s' }}
           >
             <h2 style={{ fontSize: '2.2rem', marginTop: 0, color: 'var(--accent)' }}>
-              <DecodeText text="System Conclusion" />
+              <DecodeText text="System Conclusion" speed={3} />
             </h2>
             <p style={{ fontSize: '1.4rem', color: 'var(--text-dim)', lineHeight: 1.7, marginBottom: 0 }}>
               {contentData.conclusion}

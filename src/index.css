@@ -10,7 +10,7 @@
   --accent-alt: #7000ff;
   --text: #ffffff;
   --text-heading: #ffffff;
-  --text-dim: rgba(255, 255, 255, 0.6);
+  --text-dim: rgba(255, 255, 255, 0.75);
 }
 
 html.light {
@@ -25,7 +25,7 @@ html.light {
   --accent-alt: #5500ff;
   --text: #111111;
   --text-heading: #000000;
-  --text-dim: rgba(0, 0, 0, 0.6);
+  --text-dim: rgba(0, 0, 0, 0.75);
 }
 
 * {
