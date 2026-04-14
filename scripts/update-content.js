@@ -6,11 +6,6 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONTENT_PATH = path.join(__dirname, "../src/data/content.json");
 
-const MODELS_TO_TRY = [
-  "gemini-3.1-flash",
-  "gemini-2.5-flash"
-];
-
 async function updateContent() {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -84,6 +79,15 @@ async function updateContent() {
   if (!success) {
     console.error("All models failed to generate content.");
     process.exit(1);
+  }
+}
+
+updateContent();omise(resolve => setTimeout(resolve, 60 * 60 * 1000));
+      } else {
+        console.error("Error is not a 503, exiting.");
+        process.exit(1);
+      }
+    }
   }
 }
 

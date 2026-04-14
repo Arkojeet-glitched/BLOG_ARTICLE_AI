@@ -63,7 +63,7 @@ scripts/
 5. Push to GitHub → Vercel auto-redeploys
 6. Run `scripts/send-notification.js` → email confirmation
 
-**Gemini model fallback:** tries `gemini-3.1-flash-lite` first, falls back to `gemini-2.5-flash` on error.
+**Gemini model fallback:** uses `gemini-2.5-flash` and retries after 1 hour if a 503 error occurs.
 
 ---
 
@@ -85,7 +85,7 @@ Set in **GitHub Repository Secrets** for CI. Use a local `.env` file for local t
 1. **React dependency conflict** — Wiped `package-lock.json` and reinstalled to resolve React 18 vs 19 peer dep conflict.
 2. **Custom cursor lag** — Removed Framer Motion custom cursor entirely; restored native cursor for zero latency.
 3. **GitHub Actions push rejected** — Fixed by adding `git pull --rebase` before push in the workflow.
-4. **Gemini 404 errors** — Fixed by upgrading to `gemini-3.1-flash-lite` + `gemini-2.5-flash` fallback.
+4. **Gemini 404/503 errors** — Fixed by using `gemini-2.5-flash` with a 1-hour retry loop for 503 errors.
 5. **GitHub secret name rejection** — Secret *names* must use uppercase letters and underscores only (no dashes).
 
 ---
@@ -108,3 +108,4 @@ Set in **GitHub Repository Secrets** for CI. Use a local `.env` file for local t
 ```
 
 Minimum 7 sections, target 10. All `sourceUrl` values must be real links.
+al links.

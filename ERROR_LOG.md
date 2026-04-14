@@ -20,7 +20,7 @@ This document tracks the main roadblocks we encountered while building and autom
 ### 4. The AI "Brain" Could Not Be Found (404 API Error)
 **What happened:** The daily update script failed with a "404 Not Found" error, meaning it couldn't connect to the Google Gemini AI to write the news.
 **The cause:** The script was asking for a specific, older version of the Gemini AI brain that was either retired or unavailable in our region.
-**How we fixed it:** We updated the script to ask for the newest, fastest available brains (`gemini-3.1-flash-lite` and `gemini-2.5-flash`). We also added a "safety net" (fallback mechanism) so that if the first brain is asleep or busy, it automatically asks the second one instead of crashing.
+**How we fixed it:** We updated the script to use `gemini-2.5-flash`. We also added a "safety net" (retry mechanism) so that if the AI brain is asleep or busy (503 error), it automatically waits an hour and tries again instead of crashing.
 
 ### 5. GitHub Rejected the Secret Key Names
 **What happened:** When trying to securely store the API passwords in GitHub, the system threw an error and wouldn't save them.

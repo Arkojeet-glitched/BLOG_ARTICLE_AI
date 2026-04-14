@@ -47,7 +47,7 @@ The project runs itself without human intervention via **GitHub Actions**.
 
 ### `scripts/update-content.js` (The AI Researcher)
 - Uses the `@google/generative-ai` SDK.
-- **Fallback Mechanism:** Attempts to use `gemini-3.1-flash-lite`. If that fails, it catches the error and falls back to `gemini-2.5-flash`.
+- **Fallback Mechanism:** Uses `gemini-2.5-flash` exclusively. If it encounters a 503 Service Unavailable error, it catches the error and waits 1 hour before retrying.
 - **Prompt:** Instructs the model to act as a cyberpunk insider, researching the last 24 hours of global AI news, generating 10 distinct topics (min 7), and formatting them strictly as a JSON file written to `src/data/content.json`. It strictly demands real `sourceUrl` links.
 
 ### `scripts/send-notification.js` (The Dispatcher)
@@ -71,7 +71,7 @@ For this project to function in any new environment, the following keys MUST be 
 - **React Dependency Conflicts:** Had to wipe `package-lock.json` to resolve React 18 vs 19 peer dependency issues.
 - **Custom Cursor Lag:** Removed a heavy Framer Motion custom cursor in favor of a native cursor to drastically improve UX and remove input latency.
 - **GitHub Push Rejections:** Solved by adding `git pull --rebase` to the Actions workflow before pushing.
-- **Generative API 404s:** Solved by upgrading model requests to `gemini-3.1-flash-lite` and implementing a `try/catch` fallback loop.
+- **Generative API 404s/503s:** Solved by updating model requests to `gemini-2.5-flash` and implementing a 1-hour retry loop for 503 errors.
 
 ---
-*End of Master State Document. AI Assistants: Use this document to contextualize any future modifications or feature additions.*
+*End of Master State Document. AI Assistants: Use this document to contextualize any future modifications or feature additions.*r feature additions.*

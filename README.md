@@ -34,7 +34,7 @@ The Gemini CLI took the initial HTML foundation and engineered it into a fully a
 Two APIs do the heavy lifting inside the GitHub Actions workflow:
 
 ### 1. Google Gemini API
-Used for generating the daily news content. A script called `scripts/update-content.js` runs every day, calls the Gemini API, and asks it to research the last 24 hours of AI news. It tries `gemini-3.1-flash` first and falls back to `gemini-2.5-flash` if needed. The result is a JSON file with summaries and source links that gets written straight into `src/data/content.json`.
+Used for generating the daily news content. A script called `scripts/update-content.js` runs every day, calls the Gemini API, and asks it to research the last 24 hours of AI news. It uses `gemini-2.5-flash` and has a 1-hour retry loop in case of 503 Service Unavailable errors. The result is a JSON file with summaries and source links that gets written straight into `src/data/content.json`.
 
 ### 2. SendGrid Email API
 Once the content is updated and committed, a second script (`scripts/send-notification.js`) sends me an HTML email letting me know the update went through. Nothing fancy, just so I know it worked.
