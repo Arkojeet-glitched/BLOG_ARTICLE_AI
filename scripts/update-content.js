@@ -54,10 +54,10 @@ async function updateContent() {
 
   let success = false;
 
-  for (const modelName of MODELS_TO_TRY) {
-    console.log(`Version: 1.7 - Attempting to use model: ${modelName}`);
+  while (!success) {
+    console.log(`Version: 1.8 - Attempting to use model: gemini-2.5-flash`);
     try {
-      const model = genAI.getGenerativeModel({ model: modelName });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
       const result = await model.generateContent(prompt);
       const response = await result.response;
       let text = response.text();
@@ -67,22 +67,13 @@ async function updateContent() {
       
       const content = JSON.parse(text);
       await fs.writeFile(CONTENT_PATH, JSON.stringify(content, null, 2));
-      console.log(`Content successfully updated for ${newsDateString} using ${modelName}`);
+      console.log(`Content successfully updated for ${newsDateString} using gemini-2.5-flash`);
       success = true;
-      break; // Exit the loop if successful
     } catch (error) {
-      console.error(`Failed with model ${modelName}:`, error.message);
-      // Continue to the next model in the loop
-    }
-  }
-
-  if (!success) {
-    console.error("All models failed to generate content.");
-    process.exit(1);
-  }
-}
-
-updateContent();omise(resolve => setTimeout(resolve, 60 * 60 * 1000));
+      console.error(`Failed with model gemini-2.5-flash:`, error.message);
+      if (error.status === 503 || error.message.includes("503")) {
+        console.log("Encountered 503 error. Retrying in 1 hour...");
+        await new Promise(resolve => setTimeout(resolve, 60 * 60 * 1000));
       } else {
         console.error("Error is not a 503, exiting.");
         process.exit(1);
